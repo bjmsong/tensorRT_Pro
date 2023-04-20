@@ -8,8 +8,8 @@ set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/workspace)
 
 # 如果要支持python则设置python路径
 set(HAS_PYTHON ON)
-set(PythonRoot "/datav/software/anaconda3")
-set(PythonName "python3.9")
+set(PythonRoot "/root/miniconda3/")
+set(PythonName "python3.8")
 
 # 如果你是不同显卡，请设置为显卡对应的号码参考这里：https://developer.nvidia.com/zh-cn/cuda-gpus#compute
 #set(CUDA_GEN_CODE "-gencode=arch=compute_75,code=sm_75")
@@ -17,9 +17,9 @@ set(PythonName "python3.9")
 # 如果你的opencv找不到，可以自己指定目录
 set(OpenCV_DIR   "/datav/lean/opencv-4.2.0/lib/cmake/opencv4/")
 
-set(CUDA_TOOLKIT_ROOT_DIR     "/datav/lean/cuda-11.2")
-set(CUDNN_DIR    "/datav/lean/cudnn8.2.4.15-cuda11.4")
-set(TENSORRT_DIR "/datav/lean/TensorRT-8.2.3.0-cuda11.4-cudnn8.2")
+set(CUDA_TOOLKIT_ROOT_DIR     "/usr/local/cuda-11.8")
+set(CUDNN_DIR    "/usr/include")
+set(TENSORRT_DIR "/root/TensorRT-8.5.1.7")
 
 # set(CUDA_TOOLKIT_ROOT_DIR     "/data/sxai/lean/cuda-10.2")
 # set(CUDNN_DIR    "/data/sxai/lean/cudnn7.6.5.32-cuda10.2")
@@ -30,7 +30,7 @@ set(TENSORRT_DIR "/datav/lean/TensorRT-8.2.3.0-cuda11.4-cudnn8.2")
 # set(TENSORRT_DIR "/data/sxai/lean/TensorRT-7.2.1.6")
 
 # 因为protobuf，需要用特定版本，所以这里指定路径
-set(PROTOBUF_DIR "/datav/lean/protobuf3.11.4")
+set(PROTOBUF_DIR "/usr/local/include/google/protobuf")
 
 
 find_package(CUDA REQUIRED)
@@ -43,15 +43,15 @@ include_directories(
     ${PROJECT_SOURCE_DIR}/src/tensorRT/common
     ${OpenCV_INCLUDE_DIRS}
     ${CUDA_TOOLKIT_ROOT_DIR}/include
-    ${PROTOBUF_DIR}/include
+    ${PROTOBUF_DIR}
     ${TENSORRT_DIR}/include
     ${CUDNN_DIR}/include
 )
 
-# 切记，protobuf的lib目录一定要比tensorRT目录前面，因为tensorRTlib下带有protobuf的so文件
+# 切记，protobuf的lib目录一定要在tensorRT目录前面，因为tensorRTlib下带有protobuf的so文件
 # 这可能带来错误
 link_directories(
-    ${PROTOBUF_DIR}/lib
+    /root/protobuf-3.11.4/src/.libs
     ${TENSORRT_DIR}/lib
     ${CUDA_TOOLKIT_ROOT_DIR}/lib64
     ${CUDNN_DIR}/lib

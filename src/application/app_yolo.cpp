@@ -172,9 +172,38 @@ void multi_gpu_test(){
     INFO("Done");
 }
 
+void my_test(){
+    // TRT::compile(
+    //     TRT::Mode::FP32,
+    //     1,
+    //     "/root/project/temp/yolov5-master/yolov5s_sim.onnx",
+    //     "my-yolov5s.trtmodel"
+    // );
+
+    auto yolo = Yolo::create_infer("my-yolov5s.trtmodel", Yolo::Type::V5, 0, 0.25f, 0.5f);
+    auto image = cv::imread("/root/project/tensorRT_Pro/workspace/inference/car.jpg");
+    auto bboxes = yolo->commit(image).get();
+
+    for (auto& box: bboxes){
+        uint8_t r, g, b;
+        tie(r,g,b) = iLogger::random_color(box.class_label);
+
+        cv::rectangle(
+            image, 
+        cv::Point(box.left, box.top), 
+        cv::Point(box.right, box.bottom),
+        cv::Scalar(0, 255, 0)
+        );
+
+        cv::imwrite("my-yolov5s-car.jpg", image);
+    }
+    INFO("Done");
+}
+
 int app_yolo(){
- 
-    test(Yolo::Type::V7, TRT::Mode::FP32, "yolov7");
+    
+    my_test();
+    // test(Yolo::Type::V7, TRT::Mode::FP32, "yolov7");
     //test(Yolo::Type::V5, TRT::Mode::FP32, "yolov5s");
     //test(Yolo::Type::V3, TRT::Mode::FP32, "yolov3");
 

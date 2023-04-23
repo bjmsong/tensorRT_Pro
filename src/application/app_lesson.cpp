@@ -66,7 +66,7 @@ static void lesson1(){
     /** 模型编译，onnx到trtmodel **/
     TRT::compile(
         TRT::Mode::FP32,            /** 模式, fp32 fp16 int8  **/
-        1,                          /** 最大batch size        **/
+        1,                  /** 最大batch size        **/
         "lesson1.onnx",             /** onnx文件，输入         **/
         "lesson1.fp32.trtmodel"     /** trt模型文件，输出      **/
     );

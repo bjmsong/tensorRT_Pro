@@ -59,7 +59,7 @@ torch.onnx.export(
     input_names=["input.0", "input.1"],
     output_names=["output.0"], 
     verbose=True, 
-    opset_version=11,
+    opset_version=11,      # 建议>=11,支持更好
     dynamic_axes={"input.0": {0:"batch"}, "input.1": {0:"batch"}, "output.0": {0:"batch"}},
     enable_onnx_checker=False
 )
